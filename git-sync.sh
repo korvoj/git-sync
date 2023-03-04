@@ -52,7 +52,7 @@ fi
 git push destination "${SOURCE_BRANCH}:${DESTINATION_BRANCH}" -f
 
 echo "Listing branches in source repository..."
-git ls-remote -c core.sshCommand="/usr/bin/ssh -i ~/.ssh/src_rsa" "$SOURCE_REPO" source | grep -v refs/heads/master | awk '{print $2}' > source.txt
+git -c core.sshCommand="/usr/bin/ssh -i ~/.ssh/src_rsa" ls-remote source | grep -v refs/heads/master | awk '{print $2}' > source.txt
 echo "Listing branches in destination repository..."
 git ls-remote destination | grep -v refs/heads/master | awk '{print $2}' > destination.txt
 for i in $(comm -23 destination.txt source.txt); do echo "Need to delete $i..."; done
