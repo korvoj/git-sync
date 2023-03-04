@@ -50,3 +50,7 @@ if [[ -n "$DESTINATION_SSH_PRIVATE_KEY" ]]; then
 fi
 
 git push destination "${SOURCE_BRANCH}:${DESTINATION_BRANCH}" -f
+
+git ls-remote source | grep -v refs/heads/master | awk '{print $2}' > source.txt
+git ls-remote destination | grep -v refs/heads/master | awk '{print $2}' > destination.txt
+for i in $(comm -23 destination.txt source.txt); do echo "Need to delete $i..."; done
