@@ -55,4 +55,4 @@ echo "Listing branches in source repository..."
 git -c core.sshCommand="/usr/bin/ssh -i ~/.ssh/src_rsa" ls-remote source | grep -iv 'master\|main' | awk '{print $2}' > source.txt
 echo "Listing branches in destination repository..."
 git ls-remote destination | grep -iv 'master\|main' | awk '{print $2}' > destination.txt
-for i in $(comm -23 destination.txt source.txt); do echo "Need to delete $i..."; done
+for i in $(comm -23 destination.txt source.txt); do echo "Need to delete $i..."; git push destination --delete $i; done
